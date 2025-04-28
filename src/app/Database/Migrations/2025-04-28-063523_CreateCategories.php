@@ -12,12 +12,14 @@ class CreateCategories extends Migration
             `cID` INT(11) NOT NULL AUTO_INCREMENT,
             `category_name` VARCHAR(255) NOT NULL,
             `category_color_hex` VARCHAR(7) NOT NULL,
-            PRIMARY KEY (`id`)
-        )
+            `category_created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            `category_updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            PRIMARY KEY (`cid`)
+        )");
     }
 
     public function down()
     {
-        //
+        $this->forge->dropTable(tableName: 'categories');
     }
 }

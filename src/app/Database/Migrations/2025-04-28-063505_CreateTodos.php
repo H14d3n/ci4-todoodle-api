@@ -14,6 +14,7 @@ class CreateTodos extends Migration
             `todo_category` INT(11) NOT NULL,
             `todo_due_date` DATE NOT NULL,
             `todo_description` TEXT NOT NULL,
+            `todo_status` TINYINT(1) NOT NULL DEFAULT 0,
             `todo_created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             `todo_updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             PRIMARY KEY (`tID`)

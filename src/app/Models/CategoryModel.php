@@ -12,7 +12,7 @@ class CategoryModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = false;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ['category_name', 'category_color_hex'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
