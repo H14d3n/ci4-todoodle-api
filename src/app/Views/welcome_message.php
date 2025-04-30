@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome to CodeIgniter 4!</title>
-    <meta name="description" content="The small framework with powerful features">
+    <title>Welcome to Backend for todoodle</title>
+    <meta name="description" content="The lightweight and easy to use todo list app.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/png" href="/favicon.ico">
 
@@ -214,20 +214,17 @@
                 <button id="menuToggle">&#9776;</button>
             </li>
             <li class="menu-item hidden"><a href="#">Home</a></li>
-            <li class="menu-item hidden"><a href="https://codeigniter.com/user_guide/" target="_blank">Docs</a>
+            <li class="menu-item hidden"><a href="http://localhost:8080/api/v1/todos">Todo RESTful API</a>
             </li>
-            <li class="menu-item hidden"><a href="https://forum.codeigniter.com/" target="_blank">Community</a></li>
-            <li class="menu-item hidden"><a
-                    href="https://codeigniter.com/contribute" target="_blank">Contribute</a>
-            </li>
+            <li class="menu-item hidden"><a href="http://localhost:8080/api/v1/categories">Category RESTful API</a></li>
         </ul>
     </div>
 
     <div class="heroe">
 
-        <h1>Welcome to CodeIgniter <?= CodeIgniter\CodeIgniter::CI_VERSION ?></h1>
+        <h1>Welcome to the Backend of todoodle© </h1>
 
-        <h2>The small framework with powerful features</h2>
+        <h2>The lightweight and easy to use todo list app.</h2>
 
     </div>
 
@@ -237,17 +234,14 @@
 
 <section>
 
-    <h1>About this page</h1>
+    <h1>Track our frontend development progress</h1>
 
-    <p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
+    <p>Stay updated with our latest features and improvements by following our <a href="https://github.com/h14d3n/todoodle" target="_blank">GitHub repository</a>.</p>
+    <br>
+    <hr>
+    <h1>Track our backend development progress</h1>
 
-    <p>If you would like to edit this page you will find it located at:</p>
-
-    <pre><code>app/Views/welcome_message.php</code></pre>
-
-    <p>The corresponding controller for this page can be found at:</p>
-
-    <pre><code>app/Controllers/Home.php</code></pre>
+    <p>Stay updated with our backend development progress by following our <a href="https://github.com/h14d3n/ci4-todoodle-api" target="_blank">GitHub repository</a>.</p>
 
 </section>
 

@@ -12,7 +12,7 @@ class TodoModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = false;
-    protected $allowedFields    = ['todo_name', 'todo_category', 'todo_due_date', 'todo_description', 'todo_status'];
+    protected $allowedFields    = ['title', 'category', 'due_date', 'description', 'status'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
