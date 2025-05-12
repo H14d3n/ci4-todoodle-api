@@ -28,7 +28,13 @@ class TodoModel extends Model
     protected $deletedField  = 'deleted_at';
 
     // Validation
-    protected $validationRules      = [];
+    protected $validationRules      = [
+        'title'       => 'required|min_length[3]|max_length[255]',
+        'category'    => 'required|integer',
+        'due_date'    => 'permit_empty|valid_date',
+        'description' => 'permit_empty|max_length[1000]',
+        'status'      => 'required|in_list[open,completed]',
+    ];
     protected $validationMessages   = [];
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;

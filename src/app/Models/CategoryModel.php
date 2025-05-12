@@ -28,7 +28,10 @@ class CategoryModel extends Model
     protected $deletedField  = 'deleted_at';
 
     // Validation
-    protected $validationRules      = [];
+    protected $validationRules      = [
+        'name'     => 'required|min_length[3]|max_length[255]',
+        'color_hex' => 'required|regex_match[/^#[0-9A-Fa-f]{6}$/]'
+    ];
     protected $validationMessages   = [];
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;
