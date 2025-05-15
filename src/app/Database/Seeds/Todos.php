@@ -21,18 +21,23 @@ class Todos extends Seeder
             ['title' => 'Exercise']
         ];
 
-        $TodoModel = model('App\Models\TodoModel');
-        
+        $TodoModel = new \App\Models\TodoModel();
+
         foreach ($todoNames as $todo) {
-            $TodoModel->insert([
-            'title' => $todo['title'],
-            'category_id' => rand(1, 10), // Random category ID between 1 and 10
-            'due_date' => date('Y-m-d', strtotime('+'.rand(1, 30).' days')), 
-            'description' => 'This is a description for '.$todo['title'],
-            'status' => rand(0, 1), 
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
-            ]);
+            $data = [
+                'title' => $todo['title'],
+                'category_id' => rand(1, 10), // Make sure these IDs exist!
+                'due_date' => date('Y-m-d', strtotime('+' . rand(1, 30) . ' days')),
+                'description' => 'This is a description for ' . $todo['title'],
+                'status' => rand(0, 1),
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ];
+
+            if (!$TodoModel->insert($data)) {
+                // Log or print error if insert fails
+                print_r($TodoModel->errors());
+            }
         }
     }
 }

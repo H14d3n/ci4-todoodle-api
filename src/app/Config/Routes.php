@@ -7,8 +7,8 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 
-$routes->resource('api/v1/todos', ['filter' => 'jwt']);
-$routes->resource('api/v1/categories', ['filter' => 'jwt']);
+$routes->resource('api/v1/todos', ['filter' => 'check_api_key']);
+$routes->resource('api/v1/categories', ['filter' => 'check_api_key']);
 
 $routes->post('auth/jwt', '\App\Controllers\Auth\LoginController::jwtLogin');
 

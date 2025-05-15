@@ -34,6 +34,9 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
+        'check_api_key' => \App\Filters\CheckApiKey::class,
+        'jwt' => \CodeIgniter\Shield\Filters\JWTAuth::class
+    
     ];
 
     /**
