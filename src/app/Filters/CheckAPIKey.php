@@ -3,7 +3,7 @@
 namespace App\Filters;
 
 use Config\Services;
-
+use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -44,11 +44,13 @@ class CheckAPIKey implements FilterInterface
             // Is API Key set?
             if (!empty($key)) {
 
-                // Check API Key
-                if (array_key_exists($key, $api_config->allowed_api_keys)) {
+                // Check API Key in database
+                $db = \Config\Database::connect();
+                $builder = $db->table('api_keys');
+                $exists = $builder->where('api_key', $key)->countAllResults();
 
+                if ($exists > 0) {
                     $has_valid_api_key = TRUE;
-
                 }
 
             }

@@ -12,7 +12,7 @@ class TodoModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = false;
-    protected $allowedFields    = ['title', 'category', 'due_date', 'description', 'status'];
+    protected $allowedFields    = ['title', 'category_id', 'due_date', 'description', 'status'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -30,10 +30,10 @@ class TodoModel extends Model
     // Validation
     protected $validationRules      = [
         'title'       => 'required|min_length[3]|max_length[255]',
-        'category'    => 'required|integer',
+        'category_id'    => 'required|integer',
         'due_date'    => 'permit_empty|valid_date',
         'description' => 'permit_empty|max_length[1000]',
-        'status'      => 'required|in_list[open,completed]',
+        'status'      => 'required|in_list[0,1]',
     ];
     protected $validationMessages   = [];
     protected $skipValidation       = false;
