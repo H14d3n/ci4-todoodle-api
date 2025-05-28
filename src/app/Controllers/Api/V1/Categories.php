@@ -12,7 +12,28 @@ class Categories extends ResourceController
 
     public function index()
     {
-        return $this->respond($this->model->findAll());
+        // Get query parameters
+        $limit  = $this->request->getGet('limit');
+        $offset = $this->request->getGet('offset');
+        $name   = $this->request->getGet('name'); // Example filter by name
+
+        $builder = $this->model;
+
+        if ($name !== null) {
+            $builder = $builder->like('name', $name);
+        }
+
+        if ($limit !== null) {
+            $builder = $builder->limit((int)$limit);
+        }
+
+        if ($offset !== null) {
+            $builder = $builder->offset((int)$offset);
+        }
+
+        $categories = $builder->findAll();
+
+        return $this->respond($categories);
     }
 
     public function show($id = null)
@@ -24,6 +45,7 @@ class Categories extends ResourceController
             return $this->failNotFound('Category not found');
         }
     }
+
     public function create()
     {
         $data = $this->request->getPost();
@@ -33,6 +55,7 @@ class Categories extends ResourceController
             return $this->failValidationErrors($this->model->errors());
         }
     }
+
     public function update($id = null)
     {
         $data = $this->request->getRawInput();
