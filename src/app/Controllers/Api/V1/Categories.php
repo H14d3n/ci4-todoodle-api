@@ -89,6 +89,14 @@ class Categories extends ResourceController
 
     public function delete($id = null)
     {
+        // Prüfen, ob noch Todos mit dieser Kategorie existieren
+        $todoModel = new \App\Models\TodoModel();
+        $todosCount = $todoModel->where('category_id', $id)->countAllResults();
+
+        if ($todosCount > 0) {
+            return $this->failResourceExists('Category cannot be deleted because there are still todos in it.');
+        }
+
         if ($this->model->delete($id)) {
             return $this->respondDeleted(['id' => $id]);
         } else {

@@ -29,6 +29,11 @@ class CheckAPIKey implements FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null)
     {
+        // Get API key from request
+        $api_key = $request->getGet('key') ?? '';
+
+        // Call logging
+        log_api_request($request, $api_key);
 
         // Load API config
         $api_config = config('API');
