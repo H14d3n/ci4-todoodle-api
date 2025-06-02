@@ -17,6 +17,7 @@ class Categories extends ResourceController
         $offset   = $this->request->getGet('offset');
         $name     = $this->request->getGet('name'); // Filter by name
         $id       = $this->request->getGet('id');   // Filter by id
+        $cID      = $this->request->getGet('cID');  // Also allow cID as filter
         $order_by = $this->request->getGet('order_by'); // e.g. "name,asc" or "id,desc"
 
         $builder = $this->model;
@@ -26,21 +27,32 @@ class Categories extends ResourceController
             $builder = $builder->like('name', $name);
         }
 
-        // Filter by id
+        // Mapping 
+        $fieldMap = [
+            'id'   => 'cID',   // API-Parameter "id" => "cID"
+            'cID'  => 'cID',
+            'name' => 'name'
+        ];
+
+        // Filter by id or cID
         if ($id !== null) {
-            $builder = $builder->where('id', (int)$id);
+            $builder = $builder->where('cID', (int)$id);
+        } elseif ($cID !== null) {
+            $builder = $builder->where('cID', (int)$cID);
         }
 
-        // Sortierung
+        // Sorting with whitelist
         if ($order_by !== null) {
-            // Beispiel: order_by=name,asc oder order_by=id,desc
+            // Example: "name,asc" or "cID,desc"
             $parts = explode(',', $order_by);
-            $field = $parts[0] ?? 'id';
+            $field = $parts[0] ?? 'cID';
             $direction = strtolower($parts[1] ?? 'asc');
             if (!in_array($direction, ['asc', 'desc'])) {
                 $direction = 'asc';
             }
-            $builder = $builder->orderBy($field, $direction);
+            if (isset($fieldMap[$field])) {
+                $builder = $builder->orderBy($fieldMap[$field], $direction);
+            }
         }
 
         // Pagination
@@ -69,7 +81,7 @@ class Categories extends ResourceController
 
     public function create()
     {
-        $data = $this->request->getPost();
+        $data = $this->request->getJSON(true) ?? $this->request->getPost();
         if ($this->model->insert($data)) {
             return $this->respondCreated($data);
         } else {
@@ -79,7 +91,11 @@ class Categories extends ResourceController
 
     public function update($id = null)
     {
-        $data = $this->request->getRawInput();
+        if (!$this->model->find($id)) {
+            return $this->failNotFound('Category not found');
+        }
+        $data = $this->request->getJSON(true) ?? $this->request->getRawInput();
+        unset($data['cID']);
         if ($this->model->update($id, $data)) {
             return $this->respondUpdated($data);
         } else {

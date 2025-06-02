@@ -10,7 +10,7 @@ class Email extends BaseConfig
     public string $fromName   = 'Meine Test API';
     public string $recipients = '';
 
-    public string $notificationsTo = 'dennis.bacher@edu.vs.ch';
+    public string $notificationsTo = 'tizian.imseng@edu.vs.ch';
 
     /**
      * The "user agent"

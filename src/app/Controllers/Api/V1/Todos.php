@@ -17,7 +17,9 @@ class Todos extends ResourceController
         $offset     = $this->request->getGet('offset');
         $title      = $this->request->getGet('title'); // Filter by title
         $id         = $this->request->getGet('id');    // Filter by id
+        $tID        = $this->request->getGet('tID'); // Filter by tID
         $categoryId = $this->request->getGet('category_id'); // Filter by category_id
+        $status     = $this->request->getGet('status'); // Filter by status
         $order_by   = $this->request->getGet('order_by'); // z.B. "due_date,asc"
 
         $builder = $this->model;
@@ -27,9 +29,11 @@ class Todos extends ResourceController
             $builder = $builder->like('title', $title);
         }
 
-        // Filter by id
+        // Filter by id or tID
         if ($id !== null) {
-            $builder = $builder->where('id', (int)$id);
+            $builder = $builder->where('tID', (int)$id);
+        } elseif ($tID !== null) {
+            $builder = $builder->where('tID', (int)$tID);
         }
 
         // Filter by category_id
@@ -37,17 +41,32 @@ class Todos extends ResourceController
             $builder = $builder->where('category_id', (int)$categoryId);
         }
 
+        // Filter by status
+        if ($status !== null) {
+            $builder = $builder->where('status', $status);
+        }
+
         // Sortierung mit Whitelist
         $allowedOrderFields = ['id', 'title', 'due_date', 'category_id', 'created_at'];
+        // Mapping für erlaubte Felder (API → DB)
+        $orderFieldMap = [
+            'id'          => 'tID',         // API-Parameter "id" => "tID"
+            'tID'         => 'tID',
+            'title'       => 'title',
+            'due_date'    => 'due_date',
+            'category_id' => 'category_id',
+            'created_at'  => 'created_at',
+        ];
+
         if ($order_by !== null) {
             $parts = explode(',', $order_by);
-            $field = $parts[0] ?? 'id';
+            $field = $parts[0] ?? 'tID';
             $direction = strtolower($parts[1] ?? 'asc');
             if (!in_array($direction, ['asc', 'desc'])) {
                 $direction = 'asc';
             }
-            if (in_array($field, $allowedOrderFields)) {
-                $builder = $builder->orderBy($field, $direction);
+            if (isset($orderFieldMap[$field])) {
+                $builder = $builder->orderBy($orderFieldMap[$field], $direction);
             }
         }
 
@@ -76,7 +95,7 @@ class Todos extends ResourceController
 
     public function create()
     {
-        $data = $this->request->getPost();
+        $data = $this->request->getJSON(true) ?? $this->request->getPost();
         if ($this->model->insert($data)) {
             return $this->respondCreated($data);
         } else {
@@ -86,7 +105,11 @@ class Todos extends ResourceController
 
     public function update($id = null)
     {
-        $data = $this->request->getRawInput();
+        if (!$this->model->find($id)) {
+            return $this->failNotFound('Todo not found');
+        }
+        $data = $this->request->getJSON(true) ?? $this->request->getRawInput();
+        unset($data['tID']);
         if ($this->model->update($id, $data)) {
             return $this->respondUpdated($data);
         } else {
