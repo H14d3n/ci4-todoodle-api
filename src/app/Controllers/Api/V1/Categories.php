@@ -13,16 +13,37 @@ class Categories extends ResourceController
     public function index()
     {
         // Get query parameters
-        $limit  = $this->request->getGet('limit');
-        $offset = $this->request->getGet('offset');
-        $name   = $this->request->getGet('name'); // Example filter by name
+        $limit    = $this->request->getGet('limit');
+        $offset   = $this->request->getGet('offset');
+        $name     = $this->request->getGet('name'); // Filter by name
+        $id       = $this->request->getGet('id');   // Filter by id
+        $order_by = $this->request->getGet('order_by'); // e.g. "name,asc" or "id,desc"
 
         $builder = $this->model;
 
+        // Filter by name
         if ($name !== null) {
             $builder = $builder->like('name', $name);
         }
 
+        // Filter by id
+        if ($id !== null) {
+            $builder = $builder->where('id', (int)$id);
+        }
+
+        // Sortierung
+        if ($order_by !== null) {
+            // Beispiel: order_by=name,asc oder order_by=id,desc
+            $parts = explode(',', $order_by);
+            $field = $parts[0] ?? 'id';
+            $direction = strtolower($parts[1] ?? 'asc');
+            if (!in_array($direction, ['asc', 'desc'])) {
+                $direction = 'asc';
+            }
+            $builder = $builder->orderBy($field, $direction);
+        }
+
+        // Pagination
         if ($limit !== null) {
             $builder = $builder->limit((int)$limit);
         }
