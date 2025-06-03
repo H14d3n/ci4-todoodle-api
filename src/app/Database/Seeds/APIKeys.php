@@ -11,13 +11,13 @@ class APIKeys extends Seeder
 
         $api_keys_data = [
             [
-                'api_key'       => 'iGadgwrYbDPULtDq2dNrCucRQpJjY2',
+                'api_key'       => bin2hex(random_bytes(16)),
                 'comments'      => 'Tizian API Key',
                 'created_at'    => date('Y-m-d H:i:s'),
                 'updated_at'    => date('Y-m-d H:i:s'),
             ],
             [
-                'api_key'       => 'QMeLxziZmYFbALKLrVnQf6KCFFXPHX',
+                'api_key'       => bin2hex(random_bytes(16)),
                 'comments'      => 'David API Key',
                 'created_at'    => date('Y-m-d H:i:s'),
                 'updated_at'    => date('Y-m-d H:i:s'),
