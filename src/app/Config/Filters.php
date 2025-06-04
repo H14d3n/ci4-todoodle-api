@@ -35,8 +35,7 @@ class Filters extends BaseFilters
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
         'check_api_key' => \App\Filters\CheckApiKey::class,
-        'jwt' => \CodeIgniter\Shield\Filters\JWTAuth::class
-    
+        'jwt' => \CodeIgniter\Shield\Filters\JWTAuth::class,
     ];
 
     /**
@@ -106,5 +105,16 @@ class Filters extends BaseFilters
      *
      * @var array<string, array<string, list<string>>>
      */
-    public array $filters = [];
+    public array $filters = [
+        'check_api_key' => [
+            'before' => [
+                'api/v1/todos*',
+            ],
+        ],
+        'jwt' => [
+            'before' => [
+                'api/v1/categories*',
+            ],
+        ],
+    ];
 }

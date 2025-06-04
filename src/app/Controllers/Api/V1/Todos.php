@@ -12,7 +12,7 @@ class Todos extends ResourceController
 
     public function index()
     {
-        // Query-Parameter holen
+        // Get Query-Parameters
         $limit      = $this->request->getGet('limit');
         $offset     = $this->request->getGet('offset');
         $title      = $this->request->getGet('title'); // Filter by title
@@ -46,9 +46,9 @@ class Todos extends ResourceController
             $builder = $builder->where('status', $status);
         }
 
-        // Sortierung mit Whitelist
+        // Sorting with whitelist
         $allowedOrderFields = ['id', 'title', 'due_date', 'category_id', 'created_at'];
-        // Mapping für erlaubte Felder (API → DB)
+        // Mapping for allowed fields (API → DB)
         $orderFieldMap = [
             'id'          => 'tID',         // API-Parameter "id" => "tID"
             'tID'         => 'tID',
@@ -58,6 +58,7 @@ class Todos extends ResourceController
             'created_at'  => 'created_at',
         ];
 
+        // Apply ordering to the query if $order_by is set (e.g. "title,desc")
         if ($order_by !== null) {
             $parts = explode(',', $order_by);
             $field = $parts[0] ?? 'tID';
