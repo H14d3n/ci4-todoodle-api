@@ -35,6 +35,7 @@ class Filters extends BaseFilters
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
         'check_api_key' => \App\Filters\CheckApiKey::class,
+        'check_jwt'   => \App\Filters\CheckJWT::class, 
         'jwt' => \CodeIgniter\Shield\Filters\JWTAuth::class,
     ];
 
@@ -111,7 +112,7 @@ class Filters extends BaseFilters
                 'api/v1/todos*',
             ],
         ],
-        'jwt' => [
+        'check_jwt' => [
             'before' => [
                 'api/v1/categories*',
             ],
