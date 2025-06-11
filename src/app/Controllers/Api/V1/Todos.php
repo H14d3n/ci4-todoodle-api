@@ -73,6 +73,9 @@ class Todos extends ResourceController
 
         // Pagination
         if ($limit !== null) {
+            if ((int)$limit === 0) {
+                return $this->failValidationErrors(['limit' => 'Limit must be greater than 0.']);
+            }
             $builder = $builder->limit((int)$limit);
         }
         if ($offset !== null) {
@@ -90,7 +93,7 @@ class Todos extends ResourceController
         if ($todo) {
             return $this->respond($todo);
         } else {
-            return $this->failNotFound('Todo not found');
+            return $this->failNotFound('Todo with given id not found');
         }
     }
 
@@ -120,10 +123,13 @@ class Todos extends ResourceController
 
     public function delete($id = null)
     {
+        if (!$this->model->find($id)) {
+            return $this->failNotFound('Todo not found');
+        }
         if ($this->model->delete($id)) {
             return $this->respondDeleted(['id' => $id]);
         } else {
-            return $this->failNotFound('Todo not found');
+            return $this->failServerError('Failed to delete Todo');
         }
     }
 }

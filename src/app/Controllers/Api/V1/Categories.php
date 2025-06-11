@@ -57,6 +57,9 @@ class Categories extends ResourceController
 
         // Pagination
         if ($limit !== null) {
+            if ((int)$limit === 0) {
+                return $this->failValidationErrors(['limit' => 'Limit must be greater than 0.']);
+            }
             $builder = $builder->limit((int)$limit);
         }
 
@@ -65,6 +68,11 @@ class Categories extends ResourceController
         }
 
         $categories = $builder->findAll();
+
+        // Prüfen, ob nach Name gefiltert wurde und kein Ergebnis kam
+        if ($name !== null && empty($categories)) {
+            return $this->failNotFound('Category with given name not found');
+        }
 
         return $this->respond($categories);
     }
@@ -75,7 +83,7 @@ class Categories extends ResourceController
         if ($category) {
             return $this->respond($category);
         } else {
-            return $this->failNotFound('Category not found');
+            return $this->failNotFound('Category with given id not found');
         }
     }
 
