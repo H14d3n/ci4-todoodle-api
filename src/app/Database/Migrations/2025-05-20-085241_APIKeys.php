@@ -25,6 +25,6 @@ class APIKeys extends Migration
 
     public function down()
     {
-        //
+        $this->forge->dropTable('api_keys');
     }
 }
