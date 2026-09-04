@@ -21,7 +21,7 @@ This repository contains the backend RESTful API for the "todoodle" todo list ap
 
 ## Requirements
 
-- PHP 8.1 or higher
+- PHP 8.2 or higher
 - Composer
 - MySQL or compatible database
 - PHP extensions: intl, mbstring, json, mysqlnd, (optional: libcurl for HTTP\CURLRequest)
