@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8bbad85d14a103365d61b474e96395f2",
+    "content-hash": "8b5fc9bffac86ce61cf932479f58d505",
     "packages": [
         {
             "name": "codeigniter4/framework",
@@ -214,12 +214,12 @@
             "version": "v7.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/firebase/php-jwt.git",
+                "url": "https://github.com/googleapis/php-jwt.git",
                 "reference": "c03036fd5dbd530a95406ca3b5f6d7b24eaa3910"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/c03036fd5dbd530a95406ca3b5f6d7b24eaa3910",
+                "url": "https://api.github.com/repos/googleapis/php-jwt/zipball/c03036fd5dbd530a95406ca3b5f6d7b24eaa3910",
                 "reference": "c03036fd5dbd530a95406ca3b5f6d7b24eaa3910",
                 "shasum": ""
             },
@@ -2296,7 +2296,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.1"
+        "php": "^8.2"
     },
     "platform-dev": {},
     "plugin-api-version": "2.9.0"
